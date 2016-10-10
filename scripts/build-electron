@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# -eq 0 ]
+then
+  PLATFORM="all"
+else
+  PLATFORM="$1"
+fi
+
+mkdir -p .electron-build
+rm -rf .electron-build/*
+
+cp -R dist .electron-build/www
+cp electron-main.js .electron-build/index.js
+cp package.json .electron-build
+
+electron-packager .electron-build "App Name" --platform=$PLATFORM --arch=all --out="builds" --overwrite
+rm -rf .electron-build
