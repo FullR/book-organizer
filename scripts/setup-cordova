@@ -1,16 +1,22 @@
 #!/bin/bash
 
+# remove any existing cordova directory
+rm -rf cordova
+
 # create cordova project in directory called "cordova"
 cordova create cordova com.criticalthinking.appid "App Name"
+
 
 # remove sample project source
 rm -rf cordova/www
 
 # create symlink to our build directory
+mkdir -p dist
 ln -s ../dist cordova/www
 
 # enter cordova project
 cd cordova
 
+pwd
 # add platforms
 cordova platform add android --save

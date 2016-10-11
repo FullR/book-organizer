@@ -1,13 +1,17 @@
 import {observable, computed, action} from "mobx";
 
 export default class Store {
-  @observable count = 0;
+  @observable library = [];
 
-  @action increment(amount=1) {
-    this.count += amount;
+  @action addToLibrary(bookId) {
+    if(this.library.indexOf(bookId) === -1) {
+      this.library = [bookId, ...this.library];
+    }
   }
 
-  @action decrement(amount=1) {
-    this.count -= amount;
+  @action removeFromLibrary(bookId) {
+    if(this.library.indexOf(bookId) !== -1) {
+      this.library = this.library.filter((book) => book.id !== bookId);
+    }
   }
 }

@@ -1,10 +1,9 @@
-import superagentCache from "superagent-cache";
+import request from "request";
 import querystring from "querystring";
 
-const request = superagentCache();
 const defaultOptions = {
   startIndex: 0,
-  maxResults: 10,
+  maxResults: 40,
   printType: "all",
   orderBy: "relevance",
   langRestrict: "en"
@@ -19,6 +18,11 @@ function createLookupURL(bookId) {
   return `https://www.googleapis.com/books/v1/volumes/${bookId}`;
 }
 
+function cacheBook(book) {
+  bookCache[book.id] = book;
+  return book;
+}
+
 function search(query, options) {
   return new Promise((resolve, reject) => {
     request
@@ -27,6 +31,7 @@ function search(query, options) {
         if(error) {
           reject(error);
         } else {
+          result.body.items.forEach(cacheBook);
           resolve(result.body);
         }
       });
@@ -34,6 +39,8 @@ function search(query, options) {
 }
 
 function lookup(bookId) {
+  if(isCached(bookId)) return Promise.resolve(getCachedBook(bookId));
+
   return new Promise((resolve, reject) => {
     request
       .get(createLookupURL(bookId))
@@ -41,10 +48,19 @@ function lookup(bookId) {
         if(error) {
           reject(error);
         } else {
+          cacheBook(result.body);
           resolve(result.body);
         }
       });
   });
 }
 
-export default {search, lookup};
+function isCached(bookId) {
+  return bookId in bookCache;
+}
+
+function getCachedBook(bookId) {
+  return bookCache[bookId];
+}
+
+export default {search, lookup, isCached, getCachedBook};

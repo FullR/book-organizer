@@ -20,7 +20,6 @@ books.search("cats")
   .catch(log);
 require("./base.css");
 
-
 function entry() {
   log("Starting the app");
   ReactDOM.render(
