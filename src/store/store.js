@@ -1,17 +1,36 @@
 import {observable, computed, action} from "mobx";
 
 export default class Store {
-  @observable library = [];
+  bookListNames = ["library", "wishlist"];
 
-  @action addToLibrary(bookId) {
-    if(this.library.indexOf(bookId) === -1) {
-      this.library = [bookId, ...this.library];
+  @observable bookLists = {
+    library: [],
+    wishlist: []
+  };
+
+  @observable searchResults = [];
+
+  @action updateSearchResults(books) {
+    this.searchResults = log(books, "updateSearchResults");
+  }
+
+  @action addToBookList(listname, bookId) {
+    if(!this.isInBookList(listname, bookId)) {
+      log(`adding ${bookId} to ${listname}`);
+      this.bookLists[listname] = [bookId, ...this.bookLists[listname]];
     }
   }
 
-  @action removeFromLibrary(bookId) {
-    if(this.library.indexOf(bookId) !== -1) {
-      this.library = this.library.filter((book) => book.id !== bookId);
-    }
+  @action removeFromBookList(listname, bookId) {
+    log(`removing ${bookId} from ${listname}`);
+    this.getBookList(listname).remove(bookId);
+  }
+
+  isInBookList(listname, bookId) {
+    return this.getBookList(listname).includes(bookId);
+  }
+
+  getBookList(listname) {
+    return this.bookLists[listname];
   }
 }

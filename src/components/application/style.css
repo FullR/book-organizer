@@ -6,6 +6,10 @@
   overflow: hidden;
 }
 
+:local .appBar {
+  position: sticky;
+}
+
 :local .routeContainer {
   overflow: hidden;
   flex: 1 1 auto;

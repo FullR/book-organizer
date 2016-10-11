@@ -1,4 +1,5 @@
 import React, {PropTypes, Component} from "react";
+import {observer} from "mobx-react";
 import style from "./style.css";
 import TextField from "material-ui/TextField";
 import Avatar from "material-ui/Avatar";
@@ -7,12 +8,11 @@ import BookList from "components/book-list";
 import books from "books";
 import store from "store";
 
+@observer
 export default class SearchPage extends Component {
   state = {searchText: "", books: []};
 
   handleUpdateSearch = (e) => this.setState({searchText: e.target.value});
-  handleTouchTapBook = (book) => store.addToLibrary(book.id);
-  handleHoldTapBook = (book) => store.removeFromLibrary(book.id);
 
   fetchSearchResults = (event) => {
     if(event) event.preventDefault();
@@ -20,24 +20,21 @@ export default class SearchPage extends Component {
 
     books.search(searchText)
       .then(({items}) => {
-        this.setState({books: items});
+        store.updateSearchResults(items);
       })
       .catch(log);
   };
 
   render() {
-    const {searchText, books} = this.state;
+    const {searchResults} = store;
+    const {searchText} = this.state;
 
     return (
       <div className={style.root}>
         <form className={style.searchForm} onSubmit={this.fetchSearchResults}>
-          <TextField name="searchField" value={searchText} onChange={this.handleUpdateSearch} fullWidth/>
+          <TextField name="searchField" hintText="Search" value={searchText} onChange={this.handleUpdateSearch} fullWidth/>
         </form>
-        <BookList
-          books={books}
-          onTouchTapItem={this.handleTouchTapBook}
-          onHoldTapItem={this.handleBookCtx}
-        />
+        <BookList books={searchResults}/>
       </div>
     );
   }

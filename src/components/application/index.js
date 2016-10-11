@@ -1,12 +1,13 @@
 import React, {PropTypes} from "react";
 import style from "./style.css";
-import {debounce} from "lodash";
+import {capitalize} from "lodash";
 import AppBar from "material-ui/AppBar";
 import Drawer from "material-ui/Drawer";
 import MenuItem from "material-ui/MenuItem";
 import {observer} from "mobx-react";
 import SearchPage from "components/search-page";
-import LibraryPage from "components/library-page";
+import AsyncBookPage from "components/async-book-page";
+import store from "store";
 
 @observer
 export default class Application extends React.Component {
@@ -18,8 +19,15 @@ export default class Application extends React.Component {
 
   renderRoute() {
     const {route} = this.state;
-    switch(route) {
-      case "library": return (<LibraryPage/>);
+    const [routeHead, ...params] = route;
+
+    switch(routeHead) {
+      case "book-list": return (
+        <AsyncBookPage
+          bookListSubheader={capitalize(params[0])}
+          bookIds={store.getBookList(params[0])}
+        />
+      );
       default: return (<SearchPage/>);
     }
   }
@@ -30,12 +38,13 @@ export default class Application extends React.Component {
 
     return (
       <div className={style.root}>
-        <AppBar title="Books" onLeftIconButtonTouchTap={this.handleOpenDrawer}/>
+        <AppBar className={style.appBar} title="Books" onLeftIconButtonTouchTap={this.handleOpenDrawer}/>
 
         <Drawer open={drawerOpen} docked={false} onRequestChange={this.handleCloseDrawer}>
-          <MenuItem onClick={this.handleChangeRoute.bind(this, "search")}>Search</MenuItem>
-          <MenuItem onClick={this.handleChangeRoute.bind(this, "library")}>My Books</MenuItem>
-          <MenuItem onClick={this.handleChangeRoute.bind(this, "wishlist")}>Wishlist</MenuItem>
+          <MenuItem onClick={this.handleChangeRoute.bind(this, ["search"])}>Search</MenuItem>
+          {store.bookListNames.map((bookListName) =>
+            <MenuItem key={bookListName} onClick={this.handleChangeRoute.bind(this, ["book-list", bookListName])}>{capitalize(bookListName)}</MenuItem>
+          )}
         </Drawer>
 
         <div className={style.routeContainer}>
