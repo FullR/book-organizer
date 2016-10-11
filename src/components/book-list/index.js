@@ -27,19 +27,14 @@ function toggleAddIcon(enabled) {
 
 @observer
 class BookListItem extends Component {
-  state = {expanded: false};
-
-  handleToggleExpanded = () => this.setState({expanded: !this.state.expanded});
-
   render() {
     const {book} = this.props;
-    const {expanded} = this.state;
 
     return (
       <ListItem
         key={book.id}
-        onTouchTap={this.handleToggleExpanded}
-        primaryText={<ExpandableText clamp={1} expanded={expanded}>{book.volumeInfo.title}</ExpandableText>}
+        primaryText={book.volumeInfo.title}
+        secondaryText={book.volumeInfo.authors ? book.volumeInfo.authors.join(", ") : book.volumeInfo.publisher}
         leftAvatar={<Avatar src={`https://books.google.com/books/content/images/frontcover/${book.id}`}/>}
         rightIconButton={
           <IconMenu iconButtonElement={iconButtonElement} className={style.listItemIcon}>
@@ -80,6 +75,7 @@ export default function BookList(props) {
       {books.map((book) =>
         <BookListItem key={book.id} book={book}/>
       )}
+      {children}
     </List>
   );
 }

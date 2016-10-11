@@ -6,6 +6,9 @@ rm -rf cordova
 # create cordova project in directory called "cordova"
 cordova create cordova com.criticalthinking.appid "App Name"
 
+# copy cordova config into project
+rm cordova/config.xml
+cp cordova-config.xml cordova/config.xml
 
 # remove sample project source
 rm -rf cordova/www

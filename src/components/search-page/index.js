@@ -7,6 +7,8 @@ import {List} from "material-ui/List";
 import BookList from "components/book-list";
 import books from "books";
 import store from "store";
+import BookFilterBar from "components/book-filter-bar";
+import RaisedButton from "material-ui/RaisedButton";
 
 @observer
 export default class SearchPage extends Component {
@@ -17,24 +19,31 @@ export default class SearchPage extends Component {
   fetchSearchResults = (event) => {
     if(event) event.preventDefault();
     const {searchText} = this.state;
+    const {searchResults} = store;
 
     books.search(searchText)
-      .then(({items}) => {
-        store.updateSearchResults(items);
+      .then((result) => {
+        store.updateSearchResult({query: searchText, result});
       })
       .catch(log);
   };
 
   render() {
-    const {searchResults} = store;
+    const {searchResult} = store;
     const {searchText} = this.state;
+    const books = searchResult ? searchResult.result.items : [];
 
     return (
       <div className={style.root}>
-        <form className={style.searchForm} onSubmit={this.fetchSearchResults}>
-          <TextField name="searchField" hintText="Search" value={searchText} onChange={this.handleUpdateSearch} fullWidth/>
-        </form>
-        <BookList books={searchResults}/>
+        <BookFilterBar
+          name="searchInputField"
+          value={searchText}
+          onChange={this.handleUpdateSearch}
+          onSubmit={this.fetchSearchResults}
+        />
+        <BookList books={books}>
+          <RaisedButton primary fullWidth>More</RaisedButton>
+        </BookList>
       </div>
     );
   }

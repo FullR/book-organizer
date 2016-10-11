@@ -3,9 +3,3 @@
 .root {
   overflow: auto;
 }
-
-:local .searchForm {
-  display: flex;
-  flex-direction: row;
-  padding: 0 20px 20px 20px;
-}

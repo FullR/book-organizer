@@ -1,4 +1,4 @@
-import {observable, computed, action} from "mobx";
+import {observable, computed, action, transaction} from "mobx";
 
 export default class Store {
   bookListNames = ["library", "wishlist"];
@@ -8,10 +8,11 @@ export default class Store {
     wishlist: []
   };
 
-  @observable searchResults = [];
+  @observable searchResult = null;
 
-  @action updateSearchResults(books) {
-    this.searchResults = log(books, "updateSearchResults");
+  @action updateSearchResult(result) {
+    log("Updating search result", result.result.items.map((i) => i.id).join(", "));
+    this.searchResult = result;
   }
 
   @action addToBookList(listname, bookId) {
