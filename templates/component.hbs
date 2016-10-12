@@ -1,12 +1,13 @@
-import React, {PropTypes} from "react";
 import style from "./style.css";
 
-export default function {{properCase name}}(props) {
-  const {children} = props;
+export default class {{properCase name}} extends Component {
+  render() {
+    const {children} = this.props;
 
-  return (
-    <div className={style.root}>
-      {children}
-    </div>
-  );
+    return (
+      <div className={style.root}>
+        {children}
+      </div>
+    );
+  }
 }

@@ -3,18 +3,17 @@ import "index.html";
 import "base.css";
 import injectTapEventPlugin from "react-tap-event-plugin";
 import ReactDOM from "react-dom";
-import React from "react";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import ready from "util/ready";
-import Application from "components/application";
+import Application from "components/Application";
+import store from "store";
 
 require("./base.css");
 
 function entry() {
-  log("Starting the app");
   ReactDOM.render(
     <MuiThemeProvider>
-      <Application/>
+      <Application store={store}/>
     </MuiThemeProvider>,
     document.querySelector("#app")
   );

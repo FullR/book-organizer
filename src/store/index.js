@@ -1,3 +1,5 @@
-import Store from "./store";
+import Store from "./Store";
 
-export default new Store();
+const store = new Store();
+
+export default store;

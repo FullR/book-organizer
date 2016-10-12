@@ -23,6 +23,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
+        exclude: /node_modules/,
         loader: "babel"
       },
       {
@@ -54,7 +55,9 @@ module.exports = {
       PRODUCTION: JSON.stringify(PROD)
     }),
     new ProvidePlugin({
-      log: PROD ? "util/log-production" : "util/log-development"
+      log: PROD ? "util/log-production" : "util/log-development",
+      Component: "component",
+      React: "react"
     })
   ].filter(truthy)
 };

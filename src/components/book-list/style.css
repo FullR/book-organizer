@@ -1,9 +1,0 @@
-/* BookList */
-
-:local .root {
-  overflow: auto;
-}
-
-:local .listItemIcon {
-  overflow: hidden;
-}

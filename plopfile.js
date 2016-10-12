@@ -12,8 +12,8 @@ module.exports = function(plop) {
       }
     ],
     actions: [
-      {type: "add", path: "src/components/{{dashCase name}}/index.js", templateFile: "templates/component.hbs"},
-      {type: "add", path: "src/components/{{dashCase name}}/style.css", templateFile: "templates/component-style.hbs"}
+      {type: "add", path: "src/components/{{properCase name}}/index.js", templateFile: "templates/component.hbs"},
+      {type: "add", path: "src/components/{{properCase name}}/style.css", templateFile: "templates/component-style.hbs"}
     ]
   });
 };

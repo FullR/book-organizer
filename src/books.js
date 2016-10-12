@@ -4,7 +4,7 @@ import querystring from "querystring";
 const defaultOptions = {
   // key: "AIzaSyCCC4OUZavrfMRLX4Be4jGYKL5QUFuNVsc",
   startIndex: 0,
-  maxResults: 40,
+  maxResults: 20,
   printType: "all",
   orderBy: "relevance",
   langRestrict: "en"
