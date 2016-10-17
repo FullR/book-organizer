@@ -30,6 +30,7 @@ export default class Store {
   @action addToBookList(bookListId, book) {
     const bookList = this.getBookList(bookListId);
     const hasBook = !!bookList.find(({id}) => id === book.id);
+    log(book);
     if(!hasBook) {
       log(`Adding ${book.id} to ${bookListId}`);
       bookList.push(book);
@@ -44,5 +45,10 @@ export default class Store {
 
   getBookList(id) {
     return this.bookLists[id];
+  }
+
+  isInBookList(bookListName, book) {
+    const {id} = book;
+    return !!this.bookLists[bookListName].find((otherBook) => otherBook.id === id);
   }
 }

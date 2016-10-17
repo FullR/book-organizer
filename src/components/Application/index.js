@@ -5,6 +5,7 @@ import BookList from "components/BookList";
 import BookSearchPage from "components/BookSearchPage";
 import Router from "components/Router";
 import NavigationBar from "components/NavigationBar";
+import BookDetailsDialog from "components/BookDetailsDialog";
 
 export default class Application extends Component {
   render() {
@@ -22,6 +23,7 @@ export default class Application extends Component {
         <div className={style.footer}>
           <NavigationBar store={store}/>
         </div>
+        <BookDetailsDialog store={store}/>
       </StickyContainer>
     );
   }

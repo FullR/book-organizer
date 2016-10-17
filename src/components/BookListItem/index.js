@@ -9,7 +9,7 @@ export default class BookListItem extends Component {
 
     return (
       <ListItem
-        onTouchTap={() => store.addToBookList("library", book)}
+        onTouchTap={() => store.ui.openBookDialog(book)}
         primaryText={subtitle ? `${title} ${subtitle}` : title}
       />
     );

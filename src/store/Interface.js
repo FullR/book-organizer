@@ -6,6 +6,8 @@ export default class Interface {
   @observable menuDrawerOpen = false;
   @observable routeInitialized = false;
   @observable route = "";
+  @observable bookDialogOpen = false;
+  @observable bookDialogBook = null;
 
   @computed get routeTitle() {
     return capitalize(this.route);
@@ -17,6 +19,17 @@ export default class Interface {
   };
 
   @action toggleMenuDrawer = () => this.menuDrawerOpen = !this.menuDrawerOpen;
+
+  @action openBookDialog = (book) => {
+    if(book) {
+      this.bookDialogBook = book;
+      this.bookDialogOpen = true;
+    }
+  };
+
+  @action closeBookDialog = () => {
+    this.bookDialogOpen = false;
+  }
 
   changeRoute(route) {
     hasher.setHash(route);

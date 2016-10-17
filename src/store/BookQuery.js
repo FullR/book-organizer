@@ -26,6 +26,7 @@ export default class BookQuery {
         this.loading = false;
       }))
       .catch((error) => runInAction(() => {
+        log(error);
         this.error = error;
         this.loading = false;
       }));
