@@ -9,7 +9,7 @@ export default class BookDetailsDialog extends Component {
   handleClose = () => this.props.store.ui.closeBookDialog();
   handleAddToLibrary = () => {
     const {store} = this.props;
-    const {bookDialogBook} = store;
+    const {bookDialogBook} = store.ui;
     log("add", bookDialogBook)
     if(bookDialogBook) {
       store.addToBookList("library", bookDialogBook);
@@ -18,7 +18,7 @@ export default class BookDetailsDialog extends Component {
 
   handleAddToWishlist = () => {
     const {store} = this.props;
-    const {bookDialogBook} = store;
+    const {bookDialogBook} = store.ui;
     if(bookDialogBook) {
       store.addToBookList("wishlist", bookDialogBook);
     }
@@ -26,7 +26,7 @@ export default class BookDetailsDialog extends Component {
 
   handleRemoveFromLibrary = () => {
     const {store} = this.props;
-    const {bookDialogBook} = store;
+    const {bookDialogBook} = store.ui;
     log("remove", bookDialogBook);
     if(bookDialogBook) {
       store.removeFromBookList("library", bookDialogBook);
@@ -35,7 +35,7 @@ export default class BookDetailsDialog extends Component {
 
   handleRemoveFromWishlist = () => {
     const {store} = this.props;
-    const {bookDialogBook} = store;
+    const {bookDialogBook} = store.ui;
     if(bookDialogBook) {
       store.removeFromBookList("wishlist", bookDialogBook);
     }
@@ -47,7 +47,7 @@ export default class BookDetailsDialog extends Component {
     const title = bookDialogBook ? bookDialogBook.volumeInfo.title : "";
     const isInLibrary = bookDialogBook && store.isInBookList("library", bookDialogBook);
     const isInWishlist = bookDialogBook && store.isInBookList("wishlist", bookDialogBook);
-    log({isInLibrary, isInWishlist})
+
     return (
       <Drawer
         className={style.root}
@@ -61,18 +61,18 @@ export default class BookDetailsDialog extends Component {
             <BookDetails book={bookDialogBook}/>
           </div>
           <div className={style.buttons}>
-            <FlatButton primary
-              onClick={() => log("touch!")}
+            <FlatButton
+              label="Library"
+              primary={isInLibrary}
+              onClick={isInLibrary ? this.handleRemoveFromLibrary : this.handleAddToLibrary}
               icon={isInLibrary ? <RemoveIcon/> : <AddIcon/>}
-            >
-            Library
-            </FlatButton>
-            <FlatButton primary
-              onTouchTap={isInWishlist ? this.handleRemoveFromWishlist : this.handleAddToWishlist}
+            />
+            <FlatButton
+              label="Wishlist"
+              primary={isInWishlist}
+              onClick={isInWishlist ? this.handleRemoveFromWishlist : this.handleAddToWishlist}
               icon={isInWishlist ? <RemoveIcon/> : <AddIcon/>}
-            >
-            Wishlist
-            </FlatButton>
+            />
           </div>
         </div>
       </Drawer>

@@ -1,5 +1,4 @@
 import style from "./style.css";
-import Ellipsis from "components/Ellipsis";
 
 export default class BookDetails extends Component {
   state = {detailsExpanded: false};
@@ -15,15 +14,22 @@ export default class BookDetails extends Component {
     const {book} = this.props;
     if(!book) return null;
     const {detailsExpanded} = this.state;
-    const {volumeInfo} = book;
+    const {volumeInfo, searchInfo} = book;
     const {title, description, authors, buyLink, imageLinks} = volumeInfo;
-    const {thumbnail} = imageLinks;
-    log(JSON.stringify(book, null, 2));
+    const thumbnail = imageLinks && imageLinks.thumbnail;
+
+    log(require("mobx").toJS(book))
 
     return (
       <div className={style.root}>
+        {title &&
+          <h2 className={style.title}>{title}</h2>
+        }
+
         {thumbnail &&
-          <a href={buyLink}><img src={thumbnail}/></a>
+          <div className={style.thumbnailContainer}>
+            <a href={buyLink} target="_blank"><img src={thumbnail}/></a>
+          </div>
         }
 
         {authors &&
@@ -35,7 +41,7 @@ export default class BookDetails extends Component {
         }
 
         {description &&
-          <p><Ellipsis clamp={3} open={true} onExpand={this.handleDetailsExpand}>{description}</Ellipsis></p>
+          <p>{description}</p>
         }
       </div>
     );

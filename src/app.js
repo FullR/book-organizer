@@ -7,6 +7,9 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import ready from "util/ready";
 import Application from "components/Application";
 import store from "store";
+import {reaction} from "mobx";
+
+reaction(() => store.serialized, (state) => log("serialized:", state));
 
 require("./base.css");
 

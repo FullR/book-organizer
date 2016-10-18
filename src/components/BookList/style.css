@@ -6,3 +6,10 @@
 .filterInputContainer {
   margin: 0 15px 15px 15px;
 }
+
+.loadingContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

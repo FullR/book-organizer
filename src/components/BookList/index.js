@@ -3,6 +3,7 @@ import {List} from "material-ui/List";
 import Subheader from "material-ui/Subheader";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
+import CircularProgress from "material-ui/CircularProgress";
 import BookListItem from "components/BookListItem";
 
 function filterBooks(books, filterText) {
@@ -28,31 +29,39 @@ export default class BookList extends Component {
   handleUpdateFilterText = (event) => this.setState({filterText: event.target.value});
 
   render() {
-    const {books, filterable, header, onExtend, canExtend=true, children} = this.props;
+    const {books, filterable, header, onExtend, canExtend=true, loading, loadingMore, children} = this.props;
     const {filterText} = this.state;
     const filteredBooks = filterBooks(books, filterText);
 
     return (
-      <div>
-        {header ?
-          <Subheader>{header}</Subheader> :
-          null
+      <div className={style.root}>
+        {header &&
+          <Subheader>{header}</Subheader>
         }
-        {filterable ?
+        {filterable &&
           <div className={style.filterInputContainer}>
             <TextField onChange={this.handleUpdateFilterText} value={filterText} hintText="Filter" fullWidth/>
-          </div> :
-          null
+          </div>
         }
-        <List className={style.root}>
-          {filteredBooks.map((book, i) =>
-            <BookListItem key={i} book={book}/>
-          )}
-          {canExtend && books.length ?
-            <RaisedButton onTouchTap={onExtend} primary fullWidth>More</RaisedButton> :
-            null
-          }
-        </List>
+        {(loading && !loadingMore) ?
+          <div className={style.loadingContainer}>
+            <CircularProgress/>
+          </div> :
+          <List>
+            {filteredBooks.map((book, i) =>
+              <BookListItem key={i} book={book}/>
+            )}
+            {canExtend && books.length ?
+              <RaisedButton primary fullWidth
+                icon={loadingMore ? <CircularProgress size={30}/> : null}
+                label={loadingMore ? null : "More"}
+                onTouchTap={loadingMore ? null : onExtend}
+                disabled={loadingMore}
+              /> :
+              null
+            }
+          </List>
+        }
       </div>
     );
   }

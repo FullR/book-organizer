@@ -1,13 +1,14 @@
 import style from "./style.css";
 import ReactDotDotDot from "react-dotdotdot";
 
-export default function Ellipsis({open, clamp, onExpand, children}) {
+export default function Ellipsis(props) {
+  const {open, maxLength, onExpand, text} = props;
+
+  if(open || text.length <= maxLength) {
+    return (<span>{text}</span>)
+  }
+
   return (
-    <span onClick={open ? null : onExpand}>
-      {open ?
-        children :
-        <ReactDotDotDot clamp={clamp}>{children}</ReactDotDotDot>
-      }
-    </span>
+    <span onClick={onExpand}>{text.slice(0, maxLength)}...</span>
   );
 };

@@ -29,6 +29,7 @@ export default class Interface {
 
   @action closeBookDialog = () => {
     this.bookDialogOpen = false;
+    this.bookDialogBook = null;
   }
 
   changeRoute(route) {

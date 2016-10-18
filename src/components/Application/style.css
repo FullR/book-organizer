@@ -11,10 +11,12 @@
 }
 
 .content {
+  display: flex;
+  flex-direction: column;
   flex-basis: 100%;
   overflow: auto;
 }
 
 .footer {
-  padding-bottom: 5px;
+  padding: 5px 0 5px;
 }

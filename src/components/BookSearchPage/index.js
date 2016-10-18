@@ -1,6 +1,7 @@
 import style from "./style.css";
 import TextField from "material-ui/TextField";
 import BookList from "components/BookList";
+import {StickyContainer, Sticky} from "react-sticky";
 
 export default class BookSearchPage extends Component {
   state = {searchQuery: ""};
@@ -22,22 +23,26 @@ export default class BookSearchPage extends Component {
     const {bookQuery} = store;
 
     return (
-      <div className={style.root}>
-        <form className={style.searchForm} onSubmit={this.handleSearchFormSubmit}>
-          <TextField
-            ref="searchInput"
-            value={searchQuery}
-            onChange={this.handleSearchInputChange}
-            hintText="Search"
-            name="BookSearchPage__searchInput"
-            fullWidth
-          />
-        </form>
+      <StickyContainer className={style.root}>
+        <Sticky className={style.sticky}>
+          <form className={style.searchForm} onSubmit={this.handleSearchFormSubmit}>
+            <TextField
+              ref="searchInput"
+              value={searchQuery}
+              onChange={this.handleSearchInputChange}
+              hintText="Search"
+              name="BookSearchPage__searchInput"
+              fullWidth
+            />
+          </form>
+        </Sticky>
         <BookList
           books={bookQuery ? bookQuery.books : []}
           onExtend={this.handleExtendSearchResults}
+          loading={bookQuery && bookQuery.loading}
+          loadingMore={bookQuery && bookQuery.loadingMore}
         />
-      </div>
+      </StickyContainer>
     );
   }
 }
