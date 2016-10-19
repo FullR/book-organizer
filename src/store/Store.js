@@ -77,8 +77,9 @@ export default class Store {
     return this.bookLists[id];
   }
 
-  isInBookList(bookListName, book) {
+  isInBookList(bookListId, book) {
     const {id} = book;
-    return !!this.bookLists[bookListName].find((otherBook) => otherBook.id === id);
+    const bookList = this.getBookList(bookListId);
+    return !!(bookList && bookList.find((otherBook) => otherBook.id === id));
   }
 }

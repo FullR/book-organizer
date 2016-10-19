@@ -1,5 +1,6 @@
-import style from "./style.css";
+import {React, Component} from "component";
 import BookList from "components/BookList";
+import style from "./style.css";
 
 export default class BookListPage extends Component {
   constructor(props) {

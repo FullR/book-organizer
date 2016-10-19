@@ -55,9 +55,7 @@ module.exports = {
       PRODUCTION: JSON.stringify(PROD)
     }),
     new ProvidePlugin({
-      log: PROD ? "util/log-production" : "util/log-development",
-      Component: "component",
-      React: "react"
+      log: PROD ? "util/log-production" : "util/log-development"
     })
   ].filter(truthy)
 };

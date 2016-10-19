@@ -1,3 +1,4 @@
+import {React, Component} from "component";
 import style from "./style.css";
 
 export default class BookDetails extends Component {

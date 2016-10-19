@@ -2,8 +2,8 @@ import "babel-polyfill";
 import "index.html";
 import "base.css";
 import injectTapEventPlugin from "react-tap-event-plugin";
+import {React} from "component";
 import ReactDOM from "react-dom";
-import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import ready from "util/ready";
 import Application from "components/Application";
 import store from "store";
@@ -15,9 +15,7 @@ require("./base.css");
 
 function entry() {
   ReactDOM.render(
-    <MuiThemeProvider>
-      <Application store={store}/>
-    </MuiThemeProvider>,
+    <Application store={store}/>,
     document.querySelector("#app")
   );
 }

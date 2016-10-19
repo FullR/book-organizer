@@ -1,49 +1,50 @@
-import style from "./style.css";
+import {React, Component} from "component";
+import {inject} from "mobx-react";
 import Drawer from "material-ui/Drawer";
 import FlatButton from "material-ui/FlatButton";
 import AddIcon from "material-ui/svg-icons/content/add";
 import RemoveIcon from "material-ui/svg-icons/content/remove";
 import BookDetails from "components/BookDetails";
+import style from "./style.css";
 
+@inject("store", "ui")
 export default class BookDetailsDialog extends Component {
-  handleClose = () => this.props.store.ui.closeBookDialog();
+  handleClose = () => this.props.ui.closeBookDialog();
   handleAddToLibrary = () => {
-    const {store} = this.props;
-    const {bookDialogBook} = store.ui;
-    log("add", bookDialogBook)
+    const {store, ui} = this.props;
+    const {bookDialogBook} = ui;
     if(bookDialogBook) {
       store.addToBookList("library", bookDialogBook);
     }
   };
 
   handleAddToWishlist = () => {
-    const {store} = this.props;
-    const {bookDialogBook} = store.ui;
+    const {store, ui} = this.props;
+    const {bookDialogBook} = ui;
     if(bookDialogBook) {
       store.addToBookList("wishlist", bookDialogBook);
     }
   };
 
   handleRemoveFromLibrary = () => {
-    const {store} = this.props;
-    const {bookDialogBook} = store.ui;
-    log("remove", bookDialogBook);
+    const {store, ui} = this.props;
+    const {bookDialogBook} = ui;
     if(bookDialogBook) {
       store.removeFromBookList("library", bookDialogBook);
     }
   };
 
   handleRemoveFromWishlist = () => {
-    const {store} = this.props;
-    const {bookDialogBook} = store.ui;
+    const {store, ui} = this.props;
+    const {bookDialogBook} = ui;
     if(bookDialogBook) {
       store.removeFromBookList("wishlist", bookDialogBook);
     }
   };
 
   render() {
-    const {store} = this.props;
-    const {bookDialogOpen, bookDialogBook} = store.ui;
+    const {store, ui} = this.props;
+    const {bookDialogOpen, bookDialogBook} = ui;
     const title = bookDialogBook ? bookDialogBook.volumeInfo.title : "";
     const isInLibrary = bookDialogBook && store.isInBookList("library", bookDialogBook);
     const isInWishlist = bookDialogBook && store.isInBookList("wishlist", bookDialogBook);

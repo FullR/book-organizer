@@ -1,7 +1,8 @@
-import style from "./style.css";
+import {React, Component} from "component";
 import TextField from "material-ui/TextField";
 import BookList from "components/BookList";
 import {StickyContainer, Sticky} from "react-sticky";
+import style from "./style.css";
 
 export default class BookSearchPage extends Component {
   state = {searchQuery: ""};
@@ -21,6 +22,7 @@ export default class BookSearchPage extends Component {
     const {store} = this.props;
     const {searchQuery} = this.state;
     const {bookQuery} = store;
+    log("Rendering BookSearchPage");
 
     return (
       <StickyContainer className={style.root}>

@@ -1,8 +1,10 @@
-import style from "./style.css";
+import {React, Component} from "component";
+import {inject} from "mobx-react";
 import {BottomNavigation, BottomNavigationItem} from "material-ui/BottomNavigation";
 import SearchIcon from "material-ui/svg-icons/action/search";
 import LibraryBooksIcon from "material-ui/svg-icons/av/library-books";
 import StarIcon from "material-ui/svg-icons/toggle/star";
+import style from "./style.css";
 
 const searchIcon = (<SearchIcon/>);
 const libraryBooksIcon = (<LibraryBooksIcon/>);
@@ -16,18 +18,19 @@ function getNavIndexFromRoute(route) {
   }
 }
 
+@inject("ui")
 export default class NavigationBar extends Component {
   routeChangeHandlers = {
-    search: () => this.props.store.ui.changeRoute("search"),
-    library: () => this.props.store.ui.changeRoute("library"),
-    wishlist: () => this.props.store.ui.changeRoute("wishlist"),
+    search: () => this.props.ui.changeRoute("search"),
+    library: () => this.props.ui.changeRoute("library"),
+    wishlist: () => this.props.ui.changeRoute("wishlist"),
   };
 
   render() {
-    const {store, children} = this.props;
+    const {ui, children} = this.props;
 
     return (
-      <BottomNavigation className={style.root} selectedIndex={getNavIndexFromRoute(store.ui.route)}>
+      <BottomNavigation className={style.root} selectedIndex={getNavIndexFromRoute(ui.route)}>
         <BottomNavigationItem
           icon={searchIcon}
           label="Search"

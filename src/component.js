@@ -1,4 +1,7 @@
-import react from "react";
+import React from "react";
 import {observer} from "mobx-react";
 
-module.exports = observer(react.Component);
+module.exports = {
+  React,
+  Component: observer(React.Component)
+}

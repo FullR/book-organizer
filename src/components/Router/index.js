@@ -1,7 +1,10 @@
-import style from "./style.css";
+import {React, Component} from "component";
+import {inject} from "mobx-react";
 import BookSearchPage from "components/BookSearchPage";
 import BookListPage from "components/BookListPage";
+import style from "./style.css";
 
+@inject("store")
 export default class Router extends Component {
   render() {
     const {store} = this.props;

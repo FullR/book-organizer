@@ -1,10 +1,11 @@
-import style from "./style.css";
+import {React, Component} from "component";
 import {List} from "material-ui/List";
 import Subheader from "material-ui/Subheader";
 import RaisedButton from "material-ui/RaisedButton";
 import TextField from "material-ui/TextField";
 import CircularProgress from "material-ui/CircularProgress";
 import BookListItem from "components/BookListItem";
+import style from "./style.css";
 
 function filterBooks(books, filterText) {
   filterText = filterText.trim();

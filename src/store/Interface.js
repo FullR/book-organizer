@@ -10,7 +10,7 @@ export default class Interface {
   @observable bookDialogBook = null;
 
   @computed get routeTitle() {
-    return capitalize(this.route);
+    return this.route && this.route.length ? capitalize(this.route) : "Search";
   }
 
   @action handleRouteChange = (route) => {
