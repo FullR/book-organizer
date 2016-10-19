@@ -7,47 +7,26 @@ import RemoveIcon from "material-ui/svg-icons/content/remove";
 import BookDetails from "components/BookDetails";
 import style from "./style.css";
 
-@inject("store", "ui")
+@inject("ui", "library", "wishlist")
 export default class BookDetailsDialog extends Component {
   handleClose = () => this.props.ui.closeBookDialog();
+
   handleAddToLibrary = () => {
-    const {store, ui} = this.props;
-    const {bookDialogBook} = ui;
-    if(bookDialogBook) {
-      store.addToBookList("library", bookDialogBook);
-    }
+    const {library, ui} = this.props;
+    library.toggleBook(ui.bookDialogBook);
   };
 
   handleAddToWishlist = () => {
-    const {store, ui} = this.props;
-    const {bookDialogBook} = ui;
-    if(bookDialogBook) {
-      store.addToBookList("wishlist", bookDialogBook);
-    }
-  };
-
-  handleRemoveFromLibrary = () => {
-    const {store, ui} = this.props;
-    const {bookDialogBook} = ui;
-    if(bookDialogBook) {
-      store.removeFromBookList("library", bookDialogBook);
-    }
-  };
-
-  handleRemoveFromWishlist = () => {
-    const {store, ui} = this.props;
-    const {bookDialogBook} = ui;
-    if(bookDialogBook) {
-      store.removeFromBookList("wishlist", bookDialogBook);
-    }
+    const {wishlist, ui} = this.props;
+    wishlist.toggleBook(ui.bookDialogBook);
   };
 
   render() {
-    const {store, ui} = this.props;
+    const {ui, library, wishlist} = this.props;
     const {bookDialogOpen, bookDialogBook} = ui;
     const title = bookDialogBook ? bookDialogBook.volumeInfo.title : "";
-    const isInLibrary = bookDialogBook && store.isInBookList("library", bookDialogBook);
-    const isInWishlist = bookDialogBook && store.isInBookList("wishlist", bookDialogBook);
+    const isInLibrary = library.hasBook(bookDialogBook);
+    const isInWishlist = wishlist.hasBook(bookDialogBook);
 
     return (
       <Drawer
@@ -65,13 +44,13 @@ export default class BookDetailsDialog extends Component {
             <FlatButton
               label="Library"
               primary={isInLibrary}
-              onClick={isInLibrary ? this.handleRemoveFromLibrary : this.handleAddToLibrary}
+              onTouchTap={this.handleAddToLibrary}
               icon={isInLibrary ? <RemoveIcon/> : <AddIcon/>}
             />
             <FlatButton
               label="Wishlist"
               primary={isInWishlist}
-              onClick={isInWishlist ? this.handleRemoveFromWishlist : this.handleAddToWishlist}
+              onTouchTap={this.handleAddToWishlist}
               icon={isInWishlist ? <RemoveIcon/> : <AddIcon/>}
             />
           </div>

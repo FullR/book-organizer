@@ -1,5 +1,9 @@
-import Store from "./Store";
+import BookList from "./BookList";
+import Interface from "./Interface";
 
-const store = new Store();
+export const library = new BookList("library");
+export const wishlist = new BookList("wishlist");
+export const ui = new Interface();
 
-export default store;
+library.oppositeList = wishlist;
+wishlist.oppositeList = library;

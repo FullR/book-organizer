@@ -7,14 +7,13 @@ import BookSearchPage from "components/BookSearchPage";
 import Router from "components/Router";
 import NavigationBar from "components/NavigationBar";
 import BookDetailsDialog from "components/BookDetailsDialog";
+import {ui, library, wishlist} from "store";
 import style from "./style.css";
 
 export default class Application extends Component {
   render() {
-    const {store} = this.props;
-
     return (
-      <Provider store={store} ui={store.ui}>
+      <Provider ui={ui} library={library} wishlist={wishlist}>
         <MuiThemeProvider>
           <StickyContainer className={style.stickyContainer}>
             <Sticky className={style.sticky}>

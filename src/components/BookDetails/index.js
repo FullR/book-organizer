@@ -2,24 +2,12 @@ import {React, Component} from "component";
 import style from "./style.css";
 
 export default class BookDetails extends Component {
-  state = {detailsExpanded: false};
-  handleDetailsExpand = () => this.setState({detailsExpanded: true});
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.book !== this.props.books) {
-      this.setState({detailsExpanded: false});
-    }
-  }
-
   render() {
     const {book} = this.props;
     if(!book) return null;
-    const {detailsExpanded} = this.state;
     const {volumeInfo, searchInfo} = book;
     const {title, description, authors, buyLink, imageLinks} = volumeInfo;
     const thumbnail = imageLinks && imageLinks.thumbnail;
-
-    log(require("mobx").toJS(book))
 
     return (
       <div className={style.root}>

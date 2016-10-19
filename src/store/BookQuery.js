@@ -25,7 +25,6 @@ export default class BookQuery {
 
     books.search(query, {startIndex})
       .then((result) => runInAction(() => {
-        log("Success", result);
         this.error = null;
         this.books = uniqBy([...this.books, ...result.items], "id");
         this.loading = this.loadingMore = false;

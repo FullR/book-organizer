@@ -13,15 +13,23 @@ export default class BookListPage extends Component {
   handleExtend = () => this.setState({pageCount: this.state.pageCount + 1});
 
   render() {
-    const {header, books, pageLength=20, children} = this.props;
+    const {header, bookList, pageLength=20, children} = this.props;
     const {pageCount} = this.state;
+    const {books, loading} = bookList;
     const bookDisplayCount = pageLength * pageCount;
     const displayBooks = books.length > bookDisplayCount ? books.slice(0, bookDisplayCount) : books;
     const canExtend = displayBooks.length < books.length;
 
     return (
       <div className={style.root}>
-        <BookList header={header} books={displayBooks} onExtend={this.handleExtend} canExtend={canExtend} filterable/>
+        <BookList
+          header={header}
+          books={displayBooks}
+          onExtend={this.handleExtend}
+          canExtend={canExtend}
+          loading={loading}
+          filterable
+        />
       </div>
     );
   }

@@ -1,6 +1,7 @@
 import {capitalize} from "lodash";
 import {observable, computed, action} from "mobx";
 import hasher from "hasher";
+import BookQuery from "./BookQuery";
 
 export default class Interface {
   @observable menuDrawerOpen = false;
@@ -8,13 +9,27 @@ export default class Interface {
   @observable route = "";
   @observable bookDialogOpen = false;
   @observable bookDialogBook = null;
+  @observable bookQuery = null;
 
   @computed get routeTitle() {
     return this.route && this.route.length ? capitalize(this.route) : "Search";
   }
 
+  @action search = (query) => {
+    if(!query.trim().length) return;
+    const bookQuery = new BookQuery(query);
+    this.bookQuery = bookQuery;
+    bookQuery.fetch();
+  };
+
+  @action extendSearch = () => {
+    const {bookQuery} = this;
+    if(bookQuery) {
+      bookQuery.fetch();
+    }
+  };
+
   @action handleRouteChange = (route) => {
-    log(`Route changed to ${route}`);
     this.route = route;
   };
 

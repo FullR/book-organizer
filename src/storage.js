@@ -1,7 +1,7 @@
 import localforage from "localforage";
 
-localforage.config({
+const storage = localforage.createInstance({
   name: "io.github.fullr.book-organizer"
 });
 
-export default localforage;
+export default storage;
