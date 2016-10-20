@@ -1,5 +1,5 @@
 import {capitalize} from "lodash";
-import {observable, computed, action} from "mobx";
+import {observable, computed, action, asReference} from "mobx";
 import hasher from "hasher";
 import BookQuery from "./BookQuery";
 
@@ -8,7 +8,7 @@ export default class Interface {
   @observable routeInitialized = false;
   @observable route = "";
   @observable bookDialogOpen = false;
-  @observable bookDialogBook = null;
+  @observable bookDialogBook = asReference(null);
   @observable bookQuery = null;
 
   @computed get routeTitle() {

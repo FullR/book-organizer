@@ -1,5 +1,5 @@
 import {uniqBy} from "lodash";
-import {observable, action, runInAction} from "mobx";
+import {observable, action, runInAction, asFlat} from "mobx";
 import books from "books";
 
 export default class BookQuery {
@@ -7,7 +7,8 @@ export default class BookQuery {
     this.query = query;
   }
 
-  @observable books = [];
+  // books is flat because book instances should never change
+  @observable books = asFlat([]);
   @observable error = null;
   @observable loading = false;
   @observable loadingMore = false;
@@ -27,6 +28,7 @@ export default class BookQuery {
       .then((result) => runInAction(() => {
         this.error = null;
         this.books = uniqBy([...this.books, ...result.items], "id");
+        log(this.books);
         this.loading = this.loadingMore = false;
       }))
       .catch((error) => runInAction(() => {

@@ -1,4 +1,4 @@
-import {observable, action, runInAction, toJS} from "mobx";
+import {observable, action, runInAction, toJS, asFlat} from "mobx";
 import storage from "storage";
 
 export default class BookList {
@@ -9,7 +9,7 @@ export default class BookList {
   }
 
   oppositeList = null;
-  @observable books = [];
+  @observable books = asFlat([]);
   @observable loading = true;
 
   @action addBook(book) {
