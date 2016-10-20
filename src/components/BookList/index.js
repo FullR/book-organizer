@@ -30,7 +30,7 @@ export default class BookList extends Component {
   handleUpdateFilterText = (event) => this.setState({filterText: event.target.value});
 
   render() {
-    const {books, filterable, header, onExtend, canExtend=true, loading, loadingMore, children} = this.props;
+    const {books, actions, filterable, header, onExtend, canExtend=true, loading, loadingMore, children} = this.props;
     const {filterText} = this.state;
     const filteredBooks = filterBooks(books, filterText);
 
@@ -50,7 +50,7 @@ export default class BookList extends Component {
           </div> :
           <List>
             {filteredBooks.map((book, i) =>
-              <BookListItem key={i} book={book}/>
+              <BookListItem key={i} book={book} actions={actions}/>
             )}
             {canExtend && books.length ?
               <RaisedButton primary fullWidth

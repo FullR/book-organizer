@@ -3,6 +3,18 @@ import BookList from "components/BookList";
 import style from "./style.css";
 
 export default class BookListPage extends Component {
+  bookListItemActions = [
+    {
+      text: "Remove",
+      action: (book) => {
+        const {bookList} = this.props;
+        if(book && bookList) {
+          bookList.removeBook(book);
+        }
+      }
+    }
+  ];
+
   constructor(props) {
     super(props);
     this.state = {
@@ -28,6 +40,7 @@ export default class BookListPage extends Component {
           onExtend={this.handleExtend}
           canExtend={canExtend}
           loading={loading}
+          actions={this.bookListItemActions}
           filterable
         />
       </div>

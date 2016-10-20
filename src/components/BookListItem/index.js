@@ -18,19 +18,20 @@ const iconButtonElement = (
   </IconButton>
 );
 
-class BookListItemMenu extends Component {
-  render() {
-    const {actions, book} = this.props;
-    if(!actions || !actions.length) return null;
-
-    return (
-      <IconMenu iconButtonElement={iconButtonElement}>
-        {actions.map(({text, action}) =>
-          <MenuItem key={text} onTouchTap={action ? () => action(book) : null}>{text}</MenuItem>
-        )}
-      </IconMenu>
-    );
+function bookListItemMenu({actions, book}) {
+  if(!actions || !actions.length) return null;
+  // actions may depend on the individual book
+  if(typeof actions === "function") {
+    actions = actions(book);
   }
+
+  return (
+    <IconMenu iconButtonElement={iconButtonElement}>
+      {actions.map(({text, action}) =>
+        <MenuItem key={text} onTouchTap={action ? () => action(book) : null}>{text}</MenuItem>
+      )}
+    </IconMenu>
+  );
 }
 
 @inject("ui")
@@ -43,7 +44,7 @@ export default class BookListItem extends Component {
     return (
       <ListItem
         leftAvatar={<Avatar src={smallThumbnail}/>}
-        rightIconButton={<BookListItemMenu actions={actions} book={book}/>}
+        rightIconButton={bookListItemMenu({actions, book})}
         onTouchTap={() => ui.openBookDialog(book)}
         primaryText={subtitle ? `${title} ${subtitle}` : title}
         secondaryText={description}
