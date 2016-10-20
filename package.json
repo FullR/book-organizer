@@ -5,7 +5,9 @@
   "cordovaPlatforms": [
     "android"
   ],
-  "cordovaPlugins": [],
+  "cordovaPlugins": [
+    "phonegap-plugin-barcodescanner"
+  ],
   "version": "1.0.0",
   "description": "",
   "scripts": {
