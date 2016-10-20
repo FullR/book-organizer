@@ -1,5 +1,10 @@
 #!/bin/bash
 
+if [ ! -f "./cordova" ]; then
+  echo "Cordova project not found. Setting up Cordova project"
+  npm run setup:cordova
+fi
+
 cd cordova
 cordova build android --release
 cp platforms/android/build/outputs/apk/android-release-unsigned.apk ../builds

@@ -27,6 +27,7 @@ module.exports = {
         loader: "babel"
       },
       {
+        // load css as modules but bundle them as a single file
         test: /\.css$/,
         loader: ExtractTextPlugin.extract("style", "css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]")
       },
@@ -35,6 +36,7 @@ module.exports = {
         loader: "json"
       },
       {
+        // static assets are loaded as file
         test: /\.(html|eot|svg|ttf|woff|woff2)$/,
         loader: "file?name=[name].[ext]"
       },

@@ -1,4 +1,9 @@
 #!/bin/bash
 
+if [ ! -f "./cordova" ]; then
+  echo "Cordova project not found. Setting up Cordova project"
+  npm run setup:cordova
+fi
+
 cd cordova
 cordova run android
