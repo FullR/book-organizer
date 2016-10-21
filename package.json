@@ -14,7 +14,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "setup:cordova": "node scripts/setup-cordova.js",
     "clean": "rm -rf dist/*",
-    "build": "npm run clean && NODE_ENV=production webpack -p",
+    "build": "npm run clean && webpack -p",
     "build:dev": "npm run clean && webpack",
     "build:desktop": "npm run build && node scripts/build-electron.js",
     "build:android": "npm run build && scripts/build-android",

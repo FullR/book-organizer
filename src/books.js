@@ -24,7 +24,7 @@ function cacheBook(book) {
   return book;
 }
 
-function search(query, options) {
+export function search(query, options) {
   return new Promise((resolve, reject) => {
     request
       .get(createSearchURL(query, options))
@@ -39,7 +39,7 @@ function search(query, options) {
   });
 }
 
-function lookup(bookId) {
+export function lookup(bookId) {
   if(isCached(bookId)) return Promise.resolve(getCachedBook(bookId));
 
   return new Promise((resolve, reject) => {
@@ -56,12 +56,31 @@ function lookup(bookId) {
   });
 }
 
-function isCached(bookId) {
+export function lookupByISBN(isbn) {
+  log(`lookupByISBN started ${isbn}`);
+  return new Promise((resolve) => {
+    request
+      .get(`https://www.googleapis.com/books/v1/volumes?q=isbn=${isbn}`)
+      .end((error, result) => {
+        if(error) {
+          reject(error);
+        } else {
+          log("lookupByISBN result", result);
+          if(result.body && result.body.items && result.body.items.length) {
+            cacheBook(result.body.items[0]);
+            resolve(result.body.items[0]);
+          }
+        }
+      })
+  });
+}
+
+export function isCached(bookId) {
   return bookId in bookCache;
 }
 
-function getCachedBook(bookId) {
+export function getCachedBook(bookId) {
   return bookCache[bookId];
 }
 
-export default {search, lookup, isCached, getCachedBook};
+export default {search, lookup, isCached, getCachedBook, lookupByISBN};
