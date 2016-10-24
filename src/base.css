@@ -8,6 +8,11 @@ html, body, #app {
   height: 100%;
 }
 
+:global #app {
+  display: flex;
+  flex-direction: column;
+}
+
 html {
   touch-action: manipulation;
 }

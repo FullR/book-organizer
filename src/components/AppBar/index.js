@@ -1,5 +1,6 @@
 import {React, Component} from "component";
 import {inject} from "mobx-react";
+import {sticky} from "react-sticky";
 import MaterialAppBar from "material-ui/AppBar";
 import style from "./style.css";
 import FlatButton from "material-ui/FlatButton";
@@ -8,10 +9,13 @@ import books from "books";
 
 @inject("ui")
 export default class AppBar extends Component {
+  static defaultProps = {
+    iconStyleLeft: {display: "none"}
+  };
+
   handleScan = () => {
     scanBarcode()
       .then((result) => {
-        log("scanBarcode result", result);
         if(result.cancelled) return;
         return books.lookupByISBN(result.text);
       })
@@ -20,14 +24,16 @@ export default class AppBar extends Component {
   }
 
   render() {
-    const {ui} = this.props;
+    const {ui, iconStyleLeft, iconElementLeft, title} = this.props;
 
     return (
-      <MaterialAppBar
-        title={ui.routeTitle}
-        iconStyleLeft={{display: "none"}}
-        iconElementRight={<FlatButton label="Scan" onClick={this.handleScan}/>}
-      />
+      <sticky className={style.sticky}>
+        <MaterialAppBar
+          title={title}
+          iconElementLeft={iconElementLeft}
+          iconElementRight={<FlatButton label="Scan" onClick={this.handleScan}/>}
+        />
+      </sticky>
     );
   }
 }

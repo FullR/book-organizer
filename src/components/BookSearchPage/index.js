@@ -2,7 +2,9 @@ import {React, Component} from "component";
 import {inject} from "mobx-react";
 import TextField from "material-ui/TextField";
 import BookList from "components/BookList";
-import {StickyContainer, Sticky} from "react-sticky";
+import Screen from "components/Screen";
+import AppBar from "components/AppBar";
+import ScrollContainer from "components/ScrollContainer";
 import style from "./style.css";
 
 @inject("ui")
@@ -31,8 +33,10 @@ export default class BookSearchPage extends Component {
     const {bookQuery} = ui;
 
     return (
-      <div className={style.root}>
-        <form className={style.searchForm} onSubmit={this.handleSearchFormSubmit}>
+      <Screen className={style.root}>
+        <AppBar/>
+        <ScrollContainer>
+          <form className={style.searchForm} onSubmit={this.handleSearchFormSubmit}>
           <TextField
             ref="searchInput"
             value={searchText}
@@ -41,14 +45,15 @@ export default class BookSearchPage extends Component {
             name="BookSearchPage__searchInput"
             fullWidth
           />
-        </form>
-        <BookList
-          books={bookQuery ? bookQuery.books : []}
-          onExtend={ui.extendSearch}
-          loading={bookQuery && bookQuery.loading}
-          loadingMore={bookQuery && bookQuery.loadingMore}
-        />
-      </div>
+          </form>
+          <BookList
+            books={bookQuery ? bookQuery.books : []}
+            onExtend={ui.extendSearch}
+            loading={bookQuery && bookQuery.loading}
+            loadingMore={bookQuery && bookQuery.loadingMore}
+          />
+        </ScrollContainer>
+      </Screen>
     );
   }
 }

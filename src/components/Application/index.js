@@ -1,32 +1,33 @@
 import {React, Component} from "component";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import {Provider} from "mobx-react";
-import {StickyContainer, Sticky} from "react-sticky";
+import {StickyContainer} from "react-sticky";
 import AppBar from "components/AppBar";
 import BookSearchPage from "components/BookSearchPage";
 import Router from "components/Router";
 import NavigationBar from "components/NavigationBar";
 import BookDetailsDialog from "components/BookDetailsDialog";
-import {ui, library, wishlist} from "store";
+import ScrollContainer from "components/ScrollContainer";
+import {ui, library, wishlist, bookListManager} from "store";
 import style from "./style.css";
+
+{/* <AppBar/>
+<ScrollContainer>
+  <Router/>
+</ScrollContainer> */}
 
 export default class Application extends Component {
   render() {
     return (
-      <Provider ui={ui} library={library} wishlist={wishlist}>
+      <Provider ui={ui} library={library} wishlist={wishlist} bookListManager={bookListManager}>
         <MuiThemeProvider>
-          <StickyContainer className={style.stickyContainer}>
-            <Sticky className={style.sticky}>
-              <AppBar/>
-            </Sticky>
-            <div className={style.content}>
-              <Router/>
-            </div>
+          <div className={style.root}>
+            <Router/>
             <div className={style.footer}>
-              <NavigationBar/>
+            <NavigationBar/>
             </div>
             <BookDetailsDialog/>
-          </StickyContainer>
+          </div>
         </MuiThemeProvider>
       </Provider>
     );

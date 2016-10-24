@@ -2,15 +2,15 @@ import {observable, action, runInAction, toJS, asFlat} from "mobx";
 import storage from "storage";
 
 export default class BookList {
+  oppositeList = null;
+  @observable books = asFlat([]);
+  @observable loading = true;
+
   constructor(id) {
     this.id = id;
     this.storageId = `bookList#${id}`;
     this.load();
   }
-
-  oppositeList = null;
-  @observable books = asFlat([]);
-  @observable loading = true;
 
   @action addBook(book) {
     if(book && !this.hasBook(book)) {
