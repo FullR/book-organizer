@@ -12,30 +12,41 @@ import style from "./style.css";
 
 @inject("bookListManager")
 export default class LibraryPage extends Component {
-  state = {bookList: null, bookListDrawerOpen: false};
+  state = {
+    bookListDrawerOpen: false
+  };
 
+  handleChangeBookList = (bookList) => {
+    this.setState({bookListDrawerOpen: false});
+    this.props.bookListManager.selectBookList(bookList.id);
+  };
   handleBookListDrawerOpen = () => this.setState({bookListDrawerOpen: true});
   handleBookListDrawerclose = () => this.setState({bookListDrawerOpen: false});
 
   render() {
     const {bookListManager} = this.props;
-    const {bookList, bookListDrawerOpen} = this.state;
-    const books = (bookList && bookList.books) || bookListManager.books;
+    const {bookListDrawerOpen} = this.state;
+    const {selectedBookList: bookList} = bookListManager;
+    const books = bookList ? bookList.books : [];
+    log(`rendering ${bookList.id}`);
 
     return (
       <Screen>
         <AppBar
-          title={bookList ? bookList.name : "All"}
+          title={bookList ? bookList.id : ""}
           iconElementLeft={<IconButton onClick={this.handleBookListDrawerOpen}><ListIcon/></IconButton>}
           onLeftIconButtonTouchTap={this.handleBookListDrawerOpen}
         />
         <ScrollContainer>
-          <BookList books={books} filterable/>
+          {bookList &&
+            <BookListPage bookList={bookList}/>
+          }
         </ScrollContainer>
 
         <BookListDrawer
           open={bookListDrawerOpen}
           onClose={this.handleBookListDrawerclose}
+          onSelectList={this.handleChangeBookList}
         />
       </Screen>
     );

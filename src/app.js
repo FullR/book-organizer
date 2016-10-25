@@ -6,6 +6,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import ready from "util/ready";
 import Application from "components/Application";
+import storage from "storage";
 
 require("./base.css");
 
@@ -14,4 +15,6 @@ function entry() {
 }
 
 injectTapEventPlugin();
-ready.then(entry);
+ready
+  //.then(() => storage.clear())
+  .then(entry);

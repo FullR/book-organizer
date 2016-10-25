@@ -34,7 +34,7 @@ export default class BookSearchPage extends Component {
 
     return (
       <Screen className={style.root}>
-        <AppBar/>
+        <AppBar title="Search"/>
         <ScrollContainer>
           <form className={style.searchForm} onSubmit={this.handleSearchFormSubmit}>
           <TextField

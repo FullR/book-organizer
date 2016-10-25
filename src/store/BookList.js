@@ -6,9 +6,12 @@ export default class BookList {
   @observable books = asFlat([]);
   @observable loading = true;
 
-  constructor(id) {
+  constructor(id, books) {
     this.id = id;
     this.storageId = `bookList#${id}`;
+    if(books && books.length) {
+      this.books.push(...books);
+    }
     this.load();
   }
 

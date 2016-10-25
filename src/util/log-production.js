@@ -1,4 +1,2 @@
 
-module.exports = function(v) {
-  return v;
-};
+module.exports = function() {};

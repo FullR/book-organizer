@@ -13,7 +13,6 @@ const starIcon = (<StarIcon/>);
 function getNavIndexFromRoute(route) {
   switch(route) {
     case "library": return 1;
-    case "wishlist": return 2;
     default: return 0;
   }
 }
@@ -22,8 +21,7 @@ function getNavIndexFromRoute(route) {
 export default class NavigationBar extends Component {
   routeChangeHandlers = {
     search: () => this.props.ui.changeRoute("search"),
-    library: () => this.props.ui.changeRoute("library"),
-    wishlist: () => this.props.ui.changeRoute("wishlist"),
+    library: () => this.props.ui.changeRoute("library")
   };
 
   render() {
@@ -40,11 +38,6 @@ export default class NavigationBar extends Component {
           icon={libraryBooksIcon}
           label="Library"
           onTouchTap={this.routeChangeHandlers.library}
-        />
-        <BottomNavigationItem
-          icon={starIcon}
-          label="Wishlist"
-          onTouchTap={this.routeChangeHandlers.wishlist}
         />
       </BottomNavigation>
     );

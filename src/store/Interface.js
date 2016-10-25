@@ -10,6 +10,7 @@ export default class Interface {
   @observable bookDialogOpen = false;
   @observable bookDialogBook = asReference(null);
   @observable bookQuery = null;
+  @observable selectedBookList = null;
 
   @computed get routeTitle() {
     return this.route && this.route.length ? capitalize(this.route) : "Search";

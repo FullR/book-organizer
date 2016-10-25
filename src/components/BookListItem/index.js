@@ -34,8 +34,13 @@ function bookListItemMenu({actions, book}) {
   );
 }
 
-@inject("ui")
+@inject("ui", "bookListManager")
 export default class BookListItem extends Component {
+  handleTouchTap = (event) => {
+    const {ui, book} = this.props;
+    ui.openBookDialog(book);
+  };
+
   render() {
     const {ui, actions, book, maxDescriptionLength=300} = this.props;
     const {title="", description="", subtitle, imageLinks} = book.volumeInfo;
@@ -45,7 +50,7 @@ export default class BookListItem extends Component {
       <ListItem
         leftAvatar={<Avatar src={smallThumbnail}/>}
         rightIconButton={bookListItemMenu({actions, book})}
-        onTouchTap={() => ui.openBookDialog(book)}
+        onTouchTap={this.handleTouchTap}
         primaryText={subtitle ? `${title} ${subtitle}` : title}
         secondaryText={description}
         secondaryTextLines={2}
