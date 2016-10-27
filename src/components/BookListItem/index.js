@@ -34,7 +34,7 @@ function bookListItemMenu({actions, book}) {
   );
 }
 
-@inject("ui", "bookListManager")
+@inject("ui", "bookShelves")
 export default class BookListItem extends Component {
   handleTouchTap = (event) => {
     const {ui, book} = this.props;

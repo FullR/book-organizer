@@ -12,7 +12,7 @@ import style from "./style.css";
 const addIcon = (<AddIcon color="#00A"/>);
 const removeIcon = (<RemoveIcon color="#A00"/>);
 
-@inject("bookListManager")
+@inject("bookShelves")
 export default class BookListPopover extends Component {
   state = {newListName: "", newListErrorText: null};
 
@@ -23,13 +23,13 @@ export default class BookListPopover extends Component {
 
   handleCreateNewList = (event) => {
     event.preventDefault();
-    const {bookListManager, book, onRequestClose} = this.props;
+    const {bookShelves, book, onRequestClose} = this.props;
     const newListName = this.state.newListName.trim();
-    if(bookListManager.hasBookList(newListName)) {
+    if(bookShelves.hasBookList(newListName)) {
       this.setState({newListErrorText: "A list with that name already exists"});
     } else {
       log(`Creating book list ${newListName}`);
-      bookListManager.createBookList(newListName, book);
+      bookShelves.createBookList(newListName, book);
       this.setState({newListName: ""});
       if(onRequestClose) {
         onRequestClose();
@@ -38,9 +38,9 @@ export default class BookListPopover extends Component {
   };
 
   render() {
-    const {bookListManager, onSelectList, book, ...rest} = this.props;
+    const {bookShelves, onSelectList, book, ...rest} = this.props;
     const {newListName, newListErrorText} = this.state;
-    const {bookLists} = bookListManager;
+    const {bookLists} = bookShelves;
     const menuItems = bookLists.map((bookList) => {
       const isBookInList = book && bookList.hasBook(book);
       const icon = book ? (isBookInList ? removeIcon : addIcon) : null;

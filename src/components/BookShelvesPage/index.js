@@ -10,23 +10,23 @@ import ScrollContainer from "components/ScrollContainer";
 import BookListDrawer from "components/BookListDrawer";
 import style from "./style.css";
 
-@inject("bookListManager")
-export default class LibraryPage extends Component {
+@inject("bookShelves")
+export default class BookShelvesPage extends Component {
   state = {
     bookListDrawerOpen: false
   };
 
   handleChangeBookList = (bookList) => {
     this.setState({bookListDrawerOpen: false});
-    this.props.bookListManager.selectBookList(bookList.id);
+    this.props.bookShelves.selectBookList(bookList.id);
   };
   handleBookListDrawerOpen = () => this.setState({bookListDrawerOpen: true});
   handleBookListDrawerclose = () => this.setState({bookListDrawerOpen: false});
 
   render() {
-    const {bookListManager} = this.props;
+    const {bookShelves} = this.props;
     const {bookListDrawerOpen} = this.state;
-    const {selectedBookList: bookList} = bookListManager;
+    const {selectedBookList: bookList} = bookShelves;
     const books = bookList ? bookList.books : [];
     log(`rendering ${bookList.id}`);
 

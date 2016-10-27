@@ -9,15 +9,15 @@ import Router from "components/Router";
 import NavigationBar from "components/NavigationBar";
 import BookDetailsDrawer from "components/BookDetailsDrawer";
 import ScrollContainer from "components/ScrollContainer";
-import {ui, library, wishlist, bookListManager} from "store";
+import {ui, library, wishlist, bookShelves} from "store";
 import style from "./style.css";
 
 export default class Application extends Component {
   render() {
     return (
-      <Provider ui={ui} library={library} wishlist={wishlist} bookListManager={bookListManager}>
+      <Provider ui={ui} library={library} wishlist={wishlist} bookShelves={bookShelves}>
         <MuiThemeProvider>
-          {bookListManager.loaded ?
+          {bookShelves.loaded ?
             <div className={style.root}>
               <Router/>
               <div className={style.footer}>

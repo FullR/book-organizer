@@ -2,15 +2,15 @@ import {React, Component} from "component";
 import {inject} from "mobx-react";
 import style from "./style.css";
 
-@inject("bookListManager")
+@inject("bookShelves")
 export default class BookDetails extends Component {
   render() {
-    const {book, bookListManager} = this.props;
+    const {book, bookShelves} = this.props;
     if(!book) return null;
     const {volumeInfo, searchInfo} = book;
     const {title, description, authors, buyLink, imageLinks} = volumeInfo;
     const thumbnail = imageLinks && imageLinks.thumbnail;
-    const bookListNames = bookListManager.getBookListsWithBook(book).map(({id}) => id);
+    const bookListNames = bookShelves.getBookListsWithBook(book).map(({id}) => id);
 
     return (
       <div className={style.root}>

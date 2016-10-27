@@ -6,17 +6,17 @@ import ClearIcon from "material-ui/svg-icons/content/clear";
 import {List, ListItem} from "material-ui/List";
 import style from "./style.css";
 
-@inject("bookListManager")
+@inject("bookShelves")
 export default class BookListDrawer extends Component {
   handleRemoveBookList = (event, bookList) => {
     event.stopPropagation();
-    const {bookListManager} = this.props;
-    bookListManager.removeBookList(bookList.id);
+    const {bookShelves} = this.props;
+    bookShelves.removeBookList(bookList.id);
   }
 
   render() {
-    const {open, onClose, onSelectList, bookListManager} = this.props;
-    const {bookLists} = bookListManager;
+    const {open, onClose, onSelectList, bookShelves} = this.props;
+    const {bookLists} = bookShelves;
 
     return (
       <Drawer

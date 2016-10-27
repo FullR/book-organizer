@@ -11,7 +11,7 @@ import BookListPopover from "components/BookListPopover";
 import ScrollContainer from "components/ScrollContainer";
 import style from "./style.css";
 
-@inject("ui", "library", "wishlist")
+@inject("ui", "bookShelves")
 export default class BookDetailsDrawer extends Component {
   state = {bookListMenuOpen: false, bookListMenuEl: null};
 
